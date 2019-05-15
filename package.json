@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/zacaree/javascript-testing-with-jest#readme",
   "devDependencies": {
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.2.0",
     "jest": "^24.8.0"
   }
 }

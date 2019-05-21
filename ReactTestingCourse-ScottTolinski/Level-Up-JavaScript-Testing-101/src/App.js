@@ -1,6 +1,4 @@
-export const add = (x, y) => x + y;
-
-export const subtract = (x, y) => x - y;
+import { add } from './add';
 
 export const total = (subTotal, shipping) => {
   return `$${add(subTotal, shipping)}`;

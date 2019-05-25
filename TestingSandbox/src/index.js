@@ -1,5 +1,5 @@
 import { input } from './input';
-import { driveTime } from './calculateDriveTime';
+import { calcAvgSpeed } from './calcAvgSpeed';
 
 // database will store all of the relevant data
 let database = {};
@@ -11,7 +11,7 @@ export const parseDriverData = input => {
     if (cmd === 'Driver') {
       return [cmd, name];
     } else {
-      const avgSpeed = miles / driveTime(start, end); // calculate average speed.
+      const avgSpeed = calcAvgSpeed(miles, start, end);
       if (avgSpeed < 5 || avgSpeed > 100) continue; // Discard any trips that average a speed of less than 5 mph or greater than 100 mph.
       return [cmd, name, miles, avgSpeed];
     }

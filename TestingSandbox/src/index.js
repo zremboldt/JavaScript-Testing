@@ -18,46 +18,30 @@ export const parseDriverData = input => {
       database[name] = [...database[name], ...[{ avgSpeed, miles }]]; // spread the new driver record into the driver that matches that name.
     }
   }
-  // console.log(database);
-
-  // const { driver, trips } = database;
-
-  // console.log(driver);
-
-  // const calcTotals = () => {
-  //   console.log(trips);
-  // };
 
   for (const [name, trips] of Object.entries(database)) {
-    console.log(name, trips);
+    // console.log(name, trips);
+    if (trips.length > 1) {
+      const cumulativeTrips = trips.reduce((prev, current) => {
+        const [prevSpeed, prevMiles] = Object.values(prev);
+        const [currSpeed, currMiles] = Object.values(current);
+        return {
+          totalAvgSpeed: (prevSpeed + currSpeed) / trips.length,
+          totalMiles: parseFloat(prevMiles) + parseFloat(currMiles)
+        };
+      });
+      console.log(cumulativeTrips);
+    } else if (trips.length === 1) {
+      const [{ miles, avgSpeed }] = trips;
+      // console.log(miles, avgSpeed);
+      console.log(`${name}: ${miles} miles @ ${avgSpeed} mph`);
+    } else {
+      console.log(`${name}: 0 miles`);
+    }
   }
-
-  // calcTotals(database);
-  // for (const [name, trips] of Object.entries(database)) {
-  //   // console.log(trips.length);
-
-  //   if (trips.length > 1) {
-  //     const totalSpeed = trips.reduce((prev, current) => {
-  //       const [prevSpeed, prevMiles] = Object.values(prev);
-  //       const [currSpeed, currMiles] = Object.values(current);
-  //       return (prevSpeed + currSpeed) / trips.length;
-  //     });
-  //     console.log(name, totalSpeed);
-  //   } else {
-  //     console.log(`${name}: ${trips[0].miles} miles @ ${trips[0].avgSpeed} mph`);
-  //   }
-  // }
 };
 
-// storeDriverData();
-
 parseDriverData(input);
-// if new Driver
-// database = { ...database, [name]: [] }; // add driver's name as a key in the database object.
-// else
-// database[name] = [...database[name], ...[{ avgSpeed, miles }]]; // spread the new driver record into the driver that matches that name.
-
-//
 
 //
 

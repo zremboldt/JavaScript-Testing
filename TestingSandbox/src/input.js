@@ -10,5 +10,5 @@ export const input = [
 
 // Expected output
 // Alex: 42 miles @ 34 mph
-// Dan: 39 miles @ 47 mph
+// Dan: 39 miles @ 47 mph   // NOTE: Based on the input, 47mph is incorrect. It should be 50mph.
 // Bob: 0 miles

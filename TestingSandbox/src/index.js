@@ -25,16 +25,20 @@ export const parseDriverData = input => {
       const cumulativeTrips = trips.reduce((prev, current) => {
         const [prevSpeed, prevMiles] = Object.values(prev);
         const [currSpeed, currMiles] = Object.values(current);
+        const totalAvgSpeed = (prevSpeed + currSpeed) / trips.length;
+        const totalMiles = parseFloat(prevMiles) + parseFloat(currMiles);
         return {
-          totalAvgSpeed: (prevSpeed + currSpeed) / trips.length,
-          totalMiles: parseFloat(prevMiles) + parseFloat(currMiles)
+          totalAvgSpeed: Math.round(totalAvgSpeed),
+          totalMiles: Math.round(totalMiles)
         };
       });
-      console.log(cumulativeTrips);
+      const { totalMiles, totalAvgSpeed } = cumulativeTrips;
+      console.log(`${name}: ${totalMiles} miles @ ${totalAvgSpeed} mph`);
+      // console.log(cumulativeTrips);
     } else if (trips.length === 1) {
       const [{ miles, avgSpeed }] = trips;
       // console.log(miles, avgSpeed);
-      console.log(`${name}: ${miles} miles @ ${avgSpeed} mph`);
+      console.log(`${name}: ${Math.round(miles)} miles @ ${Math.round(avgSpeed)} mph`);
     } else {
       console.log(`${name}: 0 miles`);
     }
@@ -42,60 +46,3 @@ export const parseDriverData = input => {
 };
 
 parseDriverData(input);
-
-//
-
-//
-
-//
-
-//
-
-//
-
-const trackDrivingHistory = data => {
-  // console.log(database);
-  // Generate a report containing each driver with total miles driven and average speed.
-  // Sort the output by most miles driven to least.
-  // Round miles and miles per hour to the nearest integer.
-
-  let temp = [];
-
-  for (const driverEntry of Object.entries(database)) {
-    let entries = 0;
-    let avgSpeed = 0;
-    let miles = 0;
-    const [name, records] = driverEntry;
-
-    // const driverTotals = records.reduce((prev, current) => console.log(prev, current));
-
-    records.forEach(record => {
-      // console.log(record);
-      entries++;
-      avgSpeed += record.avgSpeed;
-      miles += record.miles;
-    });
-
-    temp.push(name);
-    temp.push(Math.round(avgSpeed / entries));
-    temp.push(Math.round(parseInt(miles) / entries));
-  }
-
-  // console.log(temp);
-  // console.log(records);
-};
-
-// trackDrivingHistory(input);
-
-// export default trackDrivingHistory;
-// {
-//   Dan: [[34.6, '17.3'], [65.4, '21.8']],
-//   Alex: [[33.6, '42.0']],
-//   Bob: []
-// };
-
-const thisIsdatabaseAfterTheForOfLoop = {
-  Dan: [{ avgSpeed: 34.6, miles: '17.3' }, { avgSpeed: 65.40000000000006, miles: '21.8' }],
-  Alex: [{ avgSpeed: 33.6, miles: '42.0' }],
-  Bob: []
-};

@@ -1,33 +1,20 @@
 import { input } from './input';
-import { calcAvgSpeed } from './calcAvgSpeed';
+import { parseDriverData } from './parseDriverData';
 
-// database will store all of the relevant data
+// Database will store all of the relevant data
 let database = {};
 
 export const parseAndStoreDriverData = rawString => {
   // Parse/prep relevant data for storage.
-  const parseDriverData = () => {
-    const [cmd, name, start, end, miles] = rawString.split(' '); // start end & miles are undefined when cmd == 'Driver'
-    if (cmd === 'Driver') return [cmd, name];
-    if (cmd === 'Trip') {
-      const tripAvgSpeed = calcAvgSpeed(miles, start, end);
-      if (tripAvgSpeed < 5 || tripAvgSpeed > 100) return null; // Discard any trips that average a speed of less than 5 mph or greater than 100 mph.
-      return [cmd, name, tripAvgSpeed, miles];
-    }
-  };
+  const [cmd, name, tripAvgSpeed, miles] = parseDriverData(rawString);
 
   // Store parsed data in database
-  const [cmd, name, tripAvgSpeed, miles] = parseDriverData();
   if (cmd === 'Driver') database = { ...database, [name]: [] }; // add driver's name as a key in the database object.
   if (cmd === 'Trip') database[name] = [...database[name], ...[{ tripAvgSpeed, miles }]]; // spread the new driver record into the driver that matches that name.
 };
 
-// Feed sample data in one line at a time.
-for (const line of input) {
-  parseAndStoreDriverData(line);
-}
-
-//
+// Feed sample data in to be parsed one line at a time.
+input.forEach(line => parseAndStoreDriverData(line));
 
 //
 

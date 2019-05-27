@@ -20,29 +20,36 @@ input.forEach(line => parseAndStoreDriverData(line));
 
 // TODO:
 // 1. Calculate each drivers cumulative trip stats.
-// 2. Sort output by most miles driven
+// 2. Round to the nearest integer.
+// 3. Sort list by most miles driven and output.
 
-for (const [name, trips] of Object.entries(database)) {
-  // console.log(name, trips);
-  if (trips.length > 1) {
-    const cumulativeTrips = trips.reduce((prev, current) => {
-      const [prevSpeed, prevMiles] = Object.values(prev);
-      const [currSpeed, currMiles] = Object.values(current);
-      const totalAvgSpeed = (prevSpeed + currSpeed) / trips.length;
-      const totalMiles = parseFloat(prevMiles) + parseFloat(currMiles);
-      return {
-        totalAvgSpeed: Math.round(totalAvgSpeed),
-        totalMiles: Math.round(totalMiles)
-      };
-    });
-    const { totalMiles, totalAvgSpeed } = cumulativeTrips;
-    console.log(`${name}: ${totalMiles} miles @ ${totalAvgSpeed} mph`);
-    // console.log(cumulativeTrips);
-  } else if (trips.length === 1) {
-    const [{ miles, tripAvgSpeed }] = trips;
-    // console.log(miles, avgSpeed);
-    console.log(`${name}: ${Math.round(miles)} miles @ ${Math.round(tripAvgSpeed)} mph`);
-  } else {
-    console.log(`${name}: 0 miles`);
+const calcCumulativeStats = () => {
+  const cumulativeStats = [];
+
+  for (const [name, trips] of Object.entries(database)) {
+    // console.log(name, trips);
+    if (trips.length > 1) {
+      const cumulativeTrips = trips.reduce((prev, current) => {
+        const [prevSpeed, prevMiles] = Object.values(prev);
+        const [currSpeed, currMiles] = Object.values(current);
+        const totalAvgSpeed = (prevSpeed + currSpeed) / trips.length;
+        const totalMiles = parseFloat(prevMiles) + parseFloat(currMiles);
+        return {
+          totalAvgSpeed: Math.round(totalAvgSpeed),
+          totalMiles: Math.round(totalMiles)
+        };
+      });
+      const { totalMiles, totalAvgSpeed } = cumulativeTrips;
+      console.log(`${name}: ${totalMiles} miles @ ${totalAvgSpeed} mph`);
+      // console.log(cumulativeTrips);
+    } else if (trips.length === 1) {
+      const [{ miles, tripAvgSpeed }] = trips;
+      // console.log(miles, avgSpeed);
+      console.log(`${name}: ${Math.round(miles)} miles @ ${Math.round(tripAvgSpeed)} mph`);
+    } else {
+      console.log(`${name}: 0 miles`);
+    }
   }
-}
+};
+
+calcCumulativeStats();

@@ -23,53 +23,51 @@ input.forEach(line => parseAndStoreDriverData(line));
 // 2. Round to the nearest integer.
 // 3. Sort list by most miles driven and output.
 
-const calcCumulativeStats = () => {
+export const massageDriverStats = database => {
   let cumulativeStats = [];
 
   for (const [name, trips] of Object.entries(database)) {
     // if there's more than one trip, calculate cumulative totalMiles and totalAvgSpeed
     if (trips.length > 1) {
-      let totalMiles = 0;
       let totalSpeed = 0;
+      let totalMiles = 0;
 
       for (const { tripAvgSpeed, miles } of trips) {
         totalSpeed += tripAvgSpeed;
         totalMiles += parseFloat(miles);
       }
 
-      // Find the driver's average speed
+      // Find the driver's average speed.
       let totalAvgSpeed = totalSpeed / trips.length;
 
-      // Round totals to the nearest integer
+      // Round totals to the nearest integer.
       totalAvgSpeed = Math.round(totalAvgSpeed);
       totalMiles = Math.round(totalMiles);
 
-      // Store in cumulativeStats array
+      // Store in cumulativeStats array.
       cumulativeStats = [...cumulativeStats, ...[[name, totalAvgSpeed, totalMiles]]];
     } else if (trips.length === 1) {
-      const [{ miles, tripAvgSpeed }] = trips;
+      const [{ tripAvgSpeed, miles }] = trips;
 
-      // Round totals to the nearest integer
+      // Round totals to the nearest integer.
       const totalAvgSpeed = Math.round(tripAvgSpeed);
       const totalMiles = Math.round(miles);
 
-      // Store in cumulativeStats array
+      // Store in cumulativeStats array.
       cumulativeStats = [...cumulativeStats, ...[[name, totalAvgSpeed, totalMiles]]];
     } else {
-      // Store in cumulativeStats array
+      // Store in cumulativeStats array.
       cumulativeStats = [...cumulativeStats, ...[[name, 0, 0]]];
     }
   }
 
-  // Sort list by most miles driven
-  const sortedDrivingStats = cumulativeStats.sort((a, b) => b[2] - a[2]);
-
-  // Output formatted data
-  sortedDrivingStats.forEach(driver => {
-    const [name, totalAvgSpeed, totalMiles] = driver;
-    if (totalMiles > 0) console.log(`${name}: ${totalMiles} miles @ ${totalAvgSpeed} mph`);
-    if (totalMiles === 0) console.log(`${name}: ${totalMiles} miles`);
-  });
+  // Sort and return list by most miles driven
+  return cumulativeStats.sort((a, b) => b[2] - a[2]);
 };
 
-calcCumulativeStats();
+// Display formatted data.
+massageDriverStats(database).forEach(driver => {
+  const [name, totalAvgSpeed, totalMiles] = driver;
+  if (totalMiles > 0) console.log(`${name}: ${totalMiles} miles @ ${totalAvgSpeed} mph`);
+  if (totalMiles === 0) console.log(`${name}: ${totalMiles} miles`);
+});

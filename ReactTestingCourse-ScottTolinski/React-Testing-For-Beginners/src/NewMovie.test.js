@@ -5,7 +5,7 @@ import NewMovie from './NewMovie';
 afterEach(cleanup);
 
 test('<NewMovie />', () => {
-  const { debug, getByTestId, queryByTestId } = render(<NewMovie />);
+  const { debug, getByTestId, queryByTestId, container } = render(<NewMovie />);
 
   debug();
 
@@ -14,4 +14,8 @@ test('<NewMovie />', () => {
   // we're expecting the movie-form component to exist.
   // getBy and queryBy give us different results if the component isn't there.
   expect(queryByTestId('movie-form')).toBeTruthy();
+
+  expect(container.firstChild).toMatchSnapshot();
+
+  // console.log(container.firstChild);
 });

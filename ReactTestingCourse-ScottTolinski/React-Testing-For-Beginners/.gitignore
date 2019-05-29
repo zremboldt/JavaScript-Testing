@@ -24,3 +24,5 @@ yarn-error.log*
 
 # Hide the API key
 /src/key.js
+
+__snapshots__

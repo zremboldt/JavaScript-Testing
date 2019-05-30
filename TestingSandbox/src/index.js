@@ -1,7 +1,7 @@
 import { input } from './input';
 import { parseDriverData } from './parseDriverData';
 
-// In PART 1 we'll store all of the relevant driver and trip data.
+// In PART 1 we'll parse and store all of the relevant driver and trip data.
 // In PART 2 we'll run some operations on that data.
 // In PART 3 we'll return the desired result.
 
@@ -13,11 +13,9 @@ let database = {};
 
 // PART 1:
 // 1. Add new drivers to database.
-// 2. Calculate average speed for each trip.
-//    A. Convert each timestamp to hours. e.g. 07:15 to 7.25
-//    B. Calculate driver's average speed for each trip.
-//    C. Discard trips that average < 5 mph or > 100 mph.
-// 3. Add new trips to associated driver's record in the database.
+// 2. Calculate driver's average speed for each trip.
+// 3. Discard trips that average < 5 mph or > 100 mph.
+// 4. Add new trips to associated driver's record in the database.
 
 export const storeDriverData = rawString => {
   // Parse/prep relevant data for storage.

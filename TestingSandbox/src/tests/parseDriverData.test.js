@@ -1,4 +1,4 @@
-import { parseDriverData, convertTimeToHours, calcAvgSpeed } from './parseDriverData';
+import { parseDriverData, convertTimeToHours, calcAvgSpeed } from '../parseDriverData';
 
 // Output: command, name.
 test('Parse new driver', () => {

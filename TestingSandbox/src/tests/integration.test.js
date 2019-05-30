@@ -1,4 +1,4 @@
-import { calcCumulativeTrips } from '.';
+import { calcCumulativeTrips } from '../index';
 
 test('Calculate and sort cumulative driver stats (Integration test) ', () => {
   const database = {

@@ -1,10 +1,25 @@
 import { input } from './input';
 import { parseDriverData } from './parseDriverData';
 
-// Database will store all of the relevant driver and trip data
+// In PART 1 we'll store all of the relevant driver and trip data.
+// In PART 2 we'll run some operations on that data.
+// In PART 3 we'll return the desired result.
+
+// database will store all of the relevant driver and trip data.
 let database = {};
 
-export const parseAndStoreDriverData = rawString => {
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+// PART 1:
+// 1. Add new drivers to database.
+// 2. Calculate average speed for each trip.
+//    A. Convert each timestamp to hours. e.g. 07:15 to 7.25
+//    B. Calculate driver's average speed for each trip.
+//    C. Discard trips that average < 5 mph or > 100 mph.
+// 3. Add new trips to associated driver's record in the database.
+
+export const storeDriverData = rawString => {
   // Parse/prep relevant data for storage.
   const [cmd, name, tripAvgSpeed, miles] = parseDriverData(rawString);
 
@@ -14,16 +29,17 @@ export const parseAndStoreDriverData = rawString => {
 };
 
 // Feed sample data in to be parsed and stored one line at a time.
-input.forEach(line => parseAndStoreDriverData(line));
+input.forEach(line => storeDriverData(line));
 
-//
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// TODO:
+// PART 2:
 // 1. Calculate each drivers cumulative trip stats.
 // 2. Round to the nearest integer.
-// 3. Sort list by most miles driven and output.
+// 3. Sort list by most miles driven.
 
-export const massageDriverStats = database => {
+export const calcCumulativeTrips = database => {
   let cumulativeStats = [];
 
   for (const [name, trips] of Object.entries(database)) {
@@ -65,8 +81,13 @@ export const massageDriverStats = database => {
   return cumulativeStats.sort((a, b) => b[2] - a[2]);
 };
 
-// Display formatted data.
-massageDriverStats(database).forEach(driver => {
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+// PART 3:
+// 1. Display formatted data.
+
+calcCumulativeTrips(database).forEach(driver => {
   const [name, totalAvgSpeed, totalMiles] = driver;
   if (totalMiles > 0) console.log(`${name}: ${totalMiles} miles @ ${totalAvgSpeed} mph`);
   if (totalMiles === 0) console.log(`${name}: ${totalMiles} miles`);

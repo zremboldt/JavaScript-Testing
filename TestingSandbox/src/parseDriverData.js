@@ -1,4 +1,14 @@
-import { calcAvgSpeed } from './calcAvgSpeed';
+// convert a timestamp, 07:15, to hours, 7.25.
+export const convertTimeToHours = time => {
+  const [hours, minutes] = time.split(':');
+  return minutes / 60 + parseInt(hours); // parseInt hours otherwise the `+` will concatenate.
+};
+
+// calculate the average speed for a trip.
+export const calcAvgSpeed = (milesDriven, driveStart, driveEnd) => {
+  const totalDriveTime = convertTimeToHours(driveEnd) - convertTimeToHours(driveStart);
+  return milesDriven / totalDriveTime;
+};
 
 // Parse/prep relevant data for storage.
 export const parseDriverData = rawString => {

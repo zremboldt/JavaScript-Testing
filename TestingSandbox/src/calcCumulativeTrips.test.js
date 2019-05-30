@@ -1,4 +1,4 @@
-import { massageDriverStats } from './index';
+import { calcCumulativeTrips } from '.';
 
 test('Calculate and sort cumulative driver stats (Integration test) ', () => {
   const database = {
@@ -11,5 +11,5 @@ test('Calculate and sort cumulative driver stats (Integration test) ', () => {
   };
 
   const result = [['Alex', 34, 42], ['Dan', 50, 39], ['Bob', 0, 0]];
-  expect(massageDriverStats(database)).toEqual(result);
+  expect(calcCumulativeTrips(database)).toEqual(result);
 });

@@ -7,7 +7,7 @@ afterEach(cleanup);
 test('<NewMovie />', () => {
   const { debug, getByTestId, queryByTestId, container, getByText } = render(<NewMovie />);
 
-  debug();
+  // debug();
 
   expect(getByTestId('page-title').textContent).toBe('New Movie');
 
